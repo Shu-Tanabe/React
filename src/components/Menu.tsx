@@ -16,9 +16,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListIcon from '@material-ui/icons/List';
-import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
-import DraftsIcon from '@material-ui/icons/Drafts';
+
+import { Link } from "react-router-dom";
+
 
 const drawerWidth = 240;
 
@@ -83,6 +84,10 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             padding: theme.spacing(3),
         },
+        link: {
+            textDecoration: "none",
+            color: theme.palette.text.secondary,
+        },
     }),
 );
 
@@ -145,17 +150,38 @@ const Menu: React.FC = () => {
                 </div>
                 <Divider />
                 <List>
-                    {['Register Data', 'List Data', 'Send email', 'Drafts'].map((text, index) => (
+                    <Link to="/add" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <AddIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="データ追加" />
+                        </ListItem>
+                    </Link>
+                    <Link to="/add" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <ListIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="データ一覧" />
+                        </ListItem>
+                    </Link>
+                    {/* {['Register Data', 'List Data', 'Send email', 'Drafts'].map((text, index) => (
                         <ListItem button key={text}>
                             <ListItemIcon>{
-                                index === 0 ? <AddIcon /> :
+                                index === 0 ? <AddIcon onClick={() => console.log('test')} /> :
                                     index === 1 ? <ListIcon /> :
                                         index === 2 ? <MailIcon /> : <DraftsIcon />
                             }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <Router>
+                                <Link to="/add">
+                                    <ListItemText primary={text} />
+                                </Link>
+                                <Route exact path="/add" component={RegisterData} />
+                            </Router>
                         </ListItem>
-                    ))}
+                    ))} */}
                 </List>
                 <Divider />
             </Drawer>
