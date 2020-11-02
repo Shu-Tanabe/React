@@ -17,10 +17,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
-
 import { Link } from "react-router-dom";
 
 
+export interface Menu {
+    children: React.ReactNode;
+}
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -91,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Menu: React.FC = () => {
+const Menu: React.FC<Menu> = ({ children }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -158,7 +160,7 @@ const Menu: React.FC = () => {
                             <ListItemText primary="データ追加" />
                         </ListItem>
                     </Link>
-                    <Link to="/add" className={classes.link}>
+                    <Link to="/list" className={classes.link}>
                         <ListItem button>
                             <ListItemIcon>
                                 <ListIcon />
@@ -166,27 +168,12 @@ const Menu: React.FC = () => {
                             <ListItemText primary="データ一覧" />
                         </ListItem>
                     </Link>
-                    {/* {['Register Data', 'List Data', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{
-                                index === 0 ? <AddIcon onClick={() => console.log('test')} /> :
-                                    index === 1 ? <ListIcon /> :
-                                        index === 2 ? <MailIcon /> : <DraftsIcon />
-                            }
-                            </ListItemIcon>
-                            <Router>
-                                <Link to="/add">
-                                    <ListItemText primary={text} />
-                                </Link>
-                                <Route exact path="/add" component={RegisterData} />
-                            </Router>
-                        </ListItem>
-                    ))} */}
                 </List>
                 <Divider />
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
+                {children}
             </main>
         </div>
     );

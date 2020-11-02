@@ -1,13 +1,12 @@
 import React from 'react';
+import Menu from './Menu';
+
 
 const RegisterData: React.FC = () => {
     return (
-        <div>
-            <h1>test</h1>
-        uoooooooooo
-            <h1>test2</h1>
-            <h1>test3</h1>
-        </div>
+        <Menu>
+            <h1>add</h1>
+        </Menu>
     );
 };
 
