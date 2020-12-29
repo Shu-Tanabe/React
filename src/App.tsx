@@ -1,18 +1,16 @@
 import React from 'react';
-import RegisterData from './components/RegisterData';
-import ListData from './components/ListData';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-import './App.css';
+import Menu from './Menu';
+import SignIn from './components/SignIn';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/" component={ListData} exact />
-          <Route path="/list" component={ListData} exact />
-          <Route path="/add" component={RegisterData} exact />
+          <Route path="/" component={Menu} />
+          <Route path="/SignIn" component={SignIn} exact />
+          <Route render={() => <p>No First Page!.</p>} />
         </Switch>
       </Router>
     </div>

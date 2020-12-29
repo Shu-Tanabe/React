@@ -17,12 +17,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
-import { Link } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Link
+} from "react-router-dom";
+import RegisterData from './components/RegisterData';
+import ListData from './components/ListData';
+import DescribeData from './components/DescribeData';
 
-
-export interface Menu {
-    children: React.ReactNode;
-}
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -93,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Menu: React.FC<Menu> = ({ children }) => {
+const Menu: React.FC = () => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -108,73 +112,81 @@ const Menu: React.FC<Menu> = ({ children }) => {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        My App
+            <Router>
+                <CssBaseline />
+                <AppBar
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
+                    })}
+                >
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, {
+                                [classes.hide]: open,
+                            })}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" noWrap>
+                            My App
                     </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
                         [classes.drawerOpen]: open,
                         [classes.drawerClose]: !open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    <Link to="/add" className={classes.link}>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <AddIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="データ追加" />
-                        </ListItem>
-                    </Link>
-                    <Link to="/list" className={classes.link}>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <ListIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="データ一覧" />
-                        </ListItem>
-                    </Link>
-                </List>
-                <Divider />
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                {children}
-            </main>
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        }),
+                    }}
+                >
+                    <div className={classes.toolbar}>
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <List>
+                        <Link to="/add" className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="データ追加" />
+                            </ListItem>
+                        </Link>
+                        <Link to="/list" className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <ListIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="データ一覧" />
+                            </ListItem>
+                        </Link>
+                    </List>
+                    <Divider />
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    <Switch>
+                        <Route exact path='/' component={ListData} />
+                        <Route exact path='/list' component={ListData} />
+                        <Route path='/list/:id' component={DescribeData} />
+                        <Route exact path="/add" component={RegisterData} />
+                        <Route render={() => <p>not found!.</p>} />
+                    </Switch>
+                </main>
+            </Router>
         </div>
     );
 }
